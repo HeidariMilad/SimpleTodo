@@ -7,10 +7,15 @@
 
 import UIKit
 
+protocol UpdateDelegate {
+    func didUpdate()
+}
 class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    var items: [TodoObject] = []
+    var TodoItems: [TodoObject] = []
+    var CompletedItems: [TodoObject] = []
+    var delegate: UpdateDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,17 +36,28 @@ class ViewController: UIViewController {
         fetchAll()
     }
 
-    func addToList(title: String, description: String) {
-        let obj = TodoObject()
-        obj.title = title
-        obj.descriptionNote = description
-
-        DBHelper.write(object: obj)
+    @IBAction func addButton(){
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "addTaskViewController") as! AddTaskViewController
+        vc.delegate = self
+        vc.modalPresentationStyle = .pageSheet
+        self.present(vc, animated: true)
     }
-    
+    @IBAction func filterBtn(){
+        
+    }
     func fetchAll(){
-        DBHelper.read { results in
-            self.items = results
+        DBHelper.readTodo { results in
+            self.TodoItems = []
+            self.TodoItems = results
+            // goto main thread
+            Utilities.UI {
+                self.tableView.reloadData()
+            }
+        }
+        
+        DBHelper.readCompleted { results in
+            self.CompletedItems = []
+            self.CompletedItems = results
             // goto main thread
             Utilities.UI {
                 self.tableView.reloadData()
@@ -54,15 +70,45 @@ class ViewController: UIViewController {
     }
 
 }
+extension ViewController: UpdateDelegate {
+    func didUpdate() {
+        self.fetchAll()
+    }
+}
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Todo"
+        }
+        if section == 1 {
+            return "Completed"
+        }
+        return ""
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        if section == 0 {
+           
+            return TodoItems.count
+        }
+        if section == 1 {
+            return CompletedItems.count
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "todoCell") as! TodoCell
-        let item = items[indexPath.row]
+        var item = TodoObject()
+        if indexPath.section == 0 {
+            item = TodoItems[indexPath.row]
+        }
+        if indexPath.section == 1 {
+            item = CompletedItems[indexPath.row]
+        }
         cell.title.text = item.title
         cell.descriptionNote.text = item.descriptionNote
         cell.isCompleted = item.isCompleted
@@ -75,12 +121,39 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "todoCell") as! TodoCell
+        var item = TodoObject()
+        if indexPath.section == 0 {
+            item = TodoItems[indexPath.row]
+        }
+        if indexPath.section == 1 {
+            item = CompletedItems[indexPath.row]
+        }
+        
+        DBHelper.realmBlock {
+            item.isCompleted = !item.isCompleted
+        }
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+//        })
+        cell.isCompleted = !cell.isCompleted
+        self.fetchAll()
+    }
 }
 
 class TodoCell: UITableViewCell {
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var descriptionNote: UILabel!
-    var isCompleted: Bool = false
+    @IBOutlet weak var checkBox: UIImageView!
+    
+    var isCompleted: Bool = false {
+        didSet{
+            if isCompleted == true {
+                self.checkBox.image = UIImage(named: "check-box-checked")
+            }else{
+                self.checkBox.image = UIImage(named: "check-box-empty")
+            }
+        }
+    }
     
 }

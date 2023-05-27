@@ -21,19 +21,38 @@ class DBHelper {
         DispatchQueue(label: "RealmSwift").async(execute: block)
     }
     
-    public static func write(object: Object) {
+    public static func write(object: Object, completed: (()->Void)? = nil) {
         RealmThread {
             let realm = try! Realm()
             try! realm.write {
                 realm.add(object)
             }
         }
+        completed?()
     }
     
     public static func read(_ completion: @escaping ([TodoObject])->Void) {
         Utilities.UI {
             let realm = try! Realm()
             let objects = realm.objects(TodoObject.self)
+            completion(Array(objects))
+        }
+    }
+    public static func readCompleted(_ completion: @escaping ([TodoObject])->Void) {
+        Utilities.UI {
+            let realm = try! Realm()
+            let objects = realm.objects(TodoObject.self).where { obj in
+                obj.isCompleted == true
+            }
+            completion(Array(objects))
+        }
+    }
+    public static func readTodo(_ completion: @escaping ([TodoObject])->Void) {
+        Utilities.UI {
+            let realm = try! Realm()
+            let objects = realm.objects(TodoObject.self).where { obj in
+                obj.isCompleted == false
+            }
             completion(Array(objects))
         }
     }
