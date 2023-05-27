@@ -51,7 +51,7 @@
                                                             </constraints>
                                                         </imageView>
                                                     </subviews>
-                                                    <color key="backgroundColor" red="0.3478534736277244" green="0.4075563536185538" blue="0.91591566801071167" alpha="0.56343129139072845" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="0.39729925496688739" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="bottom" secondItem="d4X-6T-auW" secondAttribute="bottom" constant="8" id="Am2-hI-bdH"/>
                                                         <constraint firstItem="pDP-ib-gWt" firstAttribute="top" secondItem="M3m-HR-fD6" secondAttribute="top" constant="8" id="Hu5-Cp-N7x"/>
@@ -93,7 +93,6 @@
                                 </constraints>
                                 <items>
                                     <navigationItem title="Simple Todo" id="cB9-eE-EW7">
-                                        <barButtonItem key="leftBarButtonItem" title="Completed" id="mgn-c2-Vh6"/>
                                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Rwe-OU-tcq">
                                             <connections>
                                                 <action selector="addButton" destination="BYZ-38-t0r" id="9BM-Ib-mBw"/>

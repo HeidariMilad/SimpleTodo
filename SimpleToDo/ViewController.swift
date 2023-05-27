@@ -30,9 +30,6 @@ class ViewController: UIViewController {
         // Use automatic dimension for rowHeight
         self.tableView.rowHeight = UITableView.automaticDimension
         
-//        addToList(title: "test1", description: "You can modify properties of a Realm object inside of a write transaction in the same way that you would update any other Swift or Objective-C object.")
-//        addToList(title: "test1", description: "desc1")
-//        addToList(title: "test1", description: "desc1")
         fetchAll()
     }
 
@@ -42,9 +39,7 @@ class ViewController: UIViewController {
         vc.modalPresentationStyle = .pageSheet
         self.present(vc, animated: true)
     }
-    @IBAction func filterBtn(){
-        
-    }
+
     func fetchAll(){
         DBHelper.readTodo { results in
             self.TodoItems = []
@@ -134,26 +129,8 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         DBHelper.realmBlock {
             item.isCompleted = !item.isCompleted
         }
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-//        })
         cell.isCompleted = !cell.isCompleted
         self.fetchAll()
     }
 }
 
-class TodoCell: UITableViewCell {
-    @IBOutlet weak var title: UILabel!
-    @IBOutlet weak var descriptionNote: UILabel!
-    @IBOutlet weak var checkBox: UIImageView!
-    
-    var isCompleted: Bool = false {
-        didSet{
-            if isCompleted == true {
-                self.checkBox.image = UIImage(named: "check-box-checked")
-            }else{
-                self.checkBox.image = UIImage(named: "check-box-empty")
-            }
-        }
-    }
-    
-}

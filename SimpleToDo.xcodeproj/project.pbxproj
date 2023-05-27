@@ -17,6 +17,7 @@
 		11EB04112A21E63C008829F0 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 11EB04102A21E63C008829F0 /* RealmSwift */; };
 		11EB04132A21E800008829F0 /* DBLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EB04122A21E800008829F0 /* DBLayer.swift */; };
 		11EB04152A22020A008829F0 /* AddTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EB04142A22020A008829F0 /* AddTaskViewController.swift */; };
+		11EB04172A221574008829F0 /* TodoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EB04162A221574008829F0 /* TodoCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		11EB04072A21DFF6008829F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		11EB04122A21E800008829F0 /* DBLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBLayer.swift; sourceTree = "<group>"; };
 		11EB04142A22020A008829F0 /* AddTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewController.swift; sourceTree = "<group>"; };
+		11EB04162A221574008829F0 /* TodoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,12 +69,13 @@
 				11EB03F92A21DFF5008829F0 /* AppDelegate.swift */,
 				11EB03FB2A21DFF5008829F0 /* SceneDelegate.swift */,
 				11EB03FD2A21DFF5008829F0 /* ViewController.swift */,
+				11EB04162A221574008829F0 /* TodoCell.swift */,
+				11EB04122A21E800008829F0 /* DBLayer.swift */,
+				11EB04142A22020A008829F0 /* AddTaskViewController.swift */,
 				11EB03FF2A21DFF5008829F0 /* Main.storyboard */,
 				11EB04022A21DFF6008829F0 /* Assets.xcassets */,
 				11EB04042A21DFF6008829F0 /* LaunchScreen.storyboard */,
 				11EB04072A21DFF6008829F0 /* Info.plist */,
-				11EB04122A21E800008829F0 /* DBLayer.swift */,
-				11EB04142A22020A008829F0 /* AddTaskViewController.swift */,
 			);
 			path = SimpleToDo;
 			sourceTree = "<group>";
@@ -156,6 +159,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				11EB03FE2A21DFF5008829F0 /* ViewController.swift in Sources */,
+				11EB04172A221574008829F0 /* TodoCell.swift in Sources */,
 				11EB03FA2A21DFF5008829F0 /* AppDelegate.swift in Sources */,
 				11EB03FC2A21DFF5008829F0 /* SceneDelegate.swift in Sources */,
 				11EB04132A21E800008829F0 /* DBLayer.swift in Sources */,
